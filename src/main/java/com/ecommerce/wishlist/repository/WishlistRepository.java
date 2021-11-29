@@ -1,12 +1,51 @@
 package com.ecommerce.wishlist.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import com.ecommerce.wishlist.model.Wishlist;
 
 @Repository
-public interface WishlistRepository extends MongoRepository<Wishlist, String>{
+public class WishlistRepository {
+	
+	private static final String ID_CLIENTE = "idCliente";
+	
+	private static final String PRODUTOS = "produtos";
 
+	private final MongoTemplate mongoTemplate;
+
+	public WishlistRepository(final MongoTemplate mongoTemplate) {
+		this.mongoTemplate = mongoTemplate;
+	}
+
+	public Wishlist adicionarProduto(final String idCliente, final String idProduto) {
+		Query query = new Query(Criteria.where(ID_CLIENTE).is(idCliente));
+		Update update = new Update().addToSet(PRODUTOS, idProduto);
+		return mongoTemplate.update(Wishlist.class).matching(query).apply(update).findAndModifyValue();
+	}
+	
+	public Wishlist criar(final Wishlist wishlist) {
+		return mongoTemplate.insert(wishlist);
+	}
+	
+	public Wishlist removerProduto(final String idCliente, final String idProduto) {
+		Query query = new Query(Criteria.where(ID_CLIENTE).is(idCliente));
+		Update update = new Update().pull(PRODUTOS, idProduto);
+		return mongoTemplate.update(Wishlist.class).matching(query).apply(update).findAndModifyValue();
+	}
+	
+	public Wishlist buscarPorIdCliente(final String idCliente) {
+		Query query = new Query(Criteria.where(ID_CLIENTE).is(idCliente));
+		return mongoTemplate.findOne(query, Wishlist.class);
+	}
+	
+	public boolean verificarProduto(final String idCliente, final String idProduto) {
+		Query query = new Query(Criteria.where(ID_CLIENTE).is(idCliente));
+		query.addCriteria(Criteria.where(PRODUTOS).in(idProduto));
+		return mongoTemplate.exists(query, Wishlist.class);
+	}
 	
 }
