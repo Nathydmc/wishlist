@@ -18,7 +18,7 @@ Projeto criado para gerenciar a Wishlist de clientes de um ecommerce.
 2. Rode o comando: `docker run -v ~/docker --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=developer -e MONGO_INITDB_ROOT_PASSWORD=developer mongo`
 3. Acesse a pasta onde encontra-se o projeto através do comando: `cd wishlist`
 4. Rode o comando: `gradle clean build`
-5. Inicie a aplicação através do comando: `gradlew bootRun`
+5. Inicie a aplicação através do comando: `gradle bootRun`
 
 ## 5. Rodar testes
 * Rode o comando: `gradle test`
