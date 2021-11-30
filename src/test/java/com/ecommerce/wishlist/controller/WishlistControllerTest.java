@@ -31,14 +31,15 @@ public class WishlistControllerTest {
 	@Test
 	@DisplayName("deve retornar 200 ao adicionar produto.")
 	public void adicionar() throws Exception {
-		this.mockMvc.perform(post("/v1/123/456"))
+		this.mockMvc.perform(post("/v1/123")
+				.content("456"))
 		.andExpect(status().isOk());
 	}
 	
 	@Test
 	@DisplayName("deve retornar 200 ao remover produto.")
 	public void remover() throws Exception {
-		this.mockMvc.perform(delete("/v1/123/456"))
+		this.mockMvc.perform(delete("/v1/123/produtos/456"))
 		.andExpect(status().isOk());
 	}
 	
@@ -58,7 +59,7 @@ public class WishlistControllerTest {
 	public void verificarProduto() throws Exception {
 		when(service.verificarProduto("123", "456")).thenReturn(true);
 		
-		this.mockMvc.perform(get("/v1/123/456"))
+		this.mockMvc.perform(get("/v1/123/produtos/456"))
 		.andExpect(status().isOk())
 		.andExpect(content().string("true"));
 	}
