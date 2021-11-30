@@ -1,6 +1,6 @@
 # Projeto: Wishlist
 ## 1. Sobre
-Projeto criado gerenciar a Wishlist de um ecommerce.
+Projeto criado para gerenciar a Wishlist de clientes de um ecommerce.
 
 ## 2. Funcionalidades
 * Adicionar produto a wishlist de um cliente
@@ -24,4 +24,4 @@ Projeto criado gerenciar a Wishlist de um ecommerce.
 * Rode o comando: `gradle test`
 
 ## 6. Endpoints
-Ao executar o projeto os endpoints e seus detalhes podem ser acessados através da URL: http://localhost:8080/swagger-ui.html#/
+Ao executar o projeto, os endpoints e seus detalhes podem ser acessados através da URL: http://localhost:8080/swagger-ui.html#/
