@@ -74,6 +74,20 @@ public class WishlistServiceTest {
 	}
 	
 	@Test
+	@DisplayName("deve lançar exception quando tentar adicionar produto sem id.")
+	public void lancarExceptionAoAdicionarProdutoSemId() {
+		IllegalArgumentException exception = 
+				Assertions.assertThrows(IllegalArgumentException.class, () -> {
+					service.adicionarProduto(ID_CLIENTE, null);
+					});
+		
+		Assertions.assertEquals("IdProduto deve ser informado", exception.getMessage());		
+		verify(repository, never()).buscarPorIdCliente(ID_CLIENTE);
+		verify(repository, never()).adicionarProduto(ID_CLIENTE, ID_PRODUTO);
+		verify(repository, never()).criar(any(Wishlist.class));
+	}
+	
+	@Test
 	@DisplayName("deve criar uma wishlist quando tentar adicionar um produto e o cliente não possuir uma wishlist.")
 	public void criarWishlist() {
 		when(repository.buscarPorIdCliente(ID_CLIENTE)).thenReturn(null);
